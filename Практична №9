@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <limits.h>
+
+int min_steps(int x, int y) {
+    int dp[y - x + 1];
+    
+    for (int i = 0; i <= y - x; i++) {
+        dp[i] = INT_MAX;
+    }
+    
+    dp[0] = 0;
+    
+    for (int i = 0; i < y - x; i++) {
+        if (dp[i] != INT_MAX) {
+            if (i + 1 <= y - x && dp[i] + 1 < dp[i + 1]) {
+                dp[i + 1] = dp[i] + 1;
+            }
+            if (i * 2 <= y - x && dp[i] + 1 < dp[i * 2]) {
+                dp[i * 2] = dp[i] + 1;
+            }
+        }
+    }
+    
+    return dp[y - x];
+}
+
+int main() {
+    int x1 = 45, y1 = 48;
+    int x2 = 45, y2 = 49;
+    int x3 = 45, y3 = 50;
+    int x4 = 45, y4 = 51;
+    
+    printf("min_steps(%d, %d) = %d\n", x1, y1, min_steps(x1, y1));
+    printf("min_steps(%d, %d) = %d\n", x2, y2, min_steps(x2, y2));
+    printf("min_steps(%d, %d) = %d\n", x3, y3, min_steps(x3, y3));
+    printf("min_steps(%d, %d) = %d\n", x4, y4, min_steps(x4, y4));
+    
+    return 0;
+}

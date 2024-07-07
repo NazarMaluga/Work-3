@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+#define MOD 12345
+
+int main() {
+    int n;
+    
+    printf("Введіть довжину послідовності n: ");
+    scanf("%d", &n);
+    
+    if (n == 1) {
+        printf("Кількість шуканих послідовностей: 2\n");
+        return 0;
+    }
+    if (n == 2) {
+        printf("Кількість шуканих послідовностей: 4\n");
+        return 0;
+    }
+    
+    int dp0[n+1], dp1[n+1], dp11[n+1];
+    
+    dp0[1] = 1;
+    dp1[1] = 1;
+    dp11[1] = 0;
+    
+    dp0[2] = 2;
+    dp1[2] = 1;
+    dp11[2] = 1;
+    
+    for (int i = 3; i <= n; i++) {
+        dp0[i] = (dp0[i-1] + dp1[i-1] + dp11[i-1]) % MOD;
+        dp1[i] = dp0[i-1];
+        dp11[i] = dp1[i-1];
+    }
+    
+    int result = (dp0[n] + dp1[n] + dp11[n]) % MOD;
+    printf("Кількість шуканих послідовностей: %d\n", result);
+    
+    return 0;
+}
